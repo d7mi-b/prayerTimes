@@ -55,7 +55,7 @@ function App() {
   }
 
   const getPrayerTimes = (latitude, longitude, month, year) => {
-    fetch(`http://api.aladhan.com/v1/calendar?latitude=${latitude}&longitude=${longitude}&method=2&month=${month}&year=${year}`)
+    fetch(`https://api.aladhan.com/v1/calendar?latitude=${latitude}&longitude=${longitude}&method=2&month=${month}&year=${year}`)
     .then(res => res.json())
     .then(data => setData(data.data[day - 1]))
     .catch(err => console.log(err))
@@ -65,6 +65,7 @@ function App() {
     watchLoacation();
     if (latitude && longitude && month && year)
       getPrayerTimes(latitude, longitude, month, year);
+
   }, [latitude, longitude, month, year])
 
   return (
@@ -75,13 +76,15 @@ function App() {
       </nav>
       <main>
         <h3 className='ayah'>إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</h3>
+        <h2>يوم {data && data.date.hijri.weekday.ar} {data && data.date.hijri.date} الموافق {data && data.date.gregorian.date}</h2>
+        <h4>الوقت الحالي: {new Date().getHours()}:{new Date().getMinutes()}</h4>
       </main>
       {
         data && 
         <div className='container'>
           <article className='prayer-times'>
             <header className='header'>
-              <h2>مواقيت الصلاة ليوم {data && data.date.hijri.weekday.ar} {data && data.date.hijri.date} الموافق {data && data.date.gregorian.date}</h2>
+              <h2>مواقيت الصلاة</h2>
             </header>
             <section className='times'>
               <section className='time'>
@@ -122,7 +125,7 @@ function App() {
       }
       <footer className='footer'>
         <p>مواقيت الصلاة</p>
-        <p>جميع الحقوق محفوظة &copy; 2022 - المكلا - حضرموت - اليمن</p>
+        <p>جميع الحقوق محفوظة <a target='_blank' href='https://github.com/d7mi-b'>عبدالرحمن</a> &copy; 2022 - المكلا - حضرموت - اليمن</p>
       </footer>
     </div>
   )
